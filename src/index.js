@@ -16,7 +16,7 @@ var fetchezData = {
  * @param {dict} config The fetch fonfig (will be processed by the function fetchConfigHelper)
  */
 function fetchez(url, config) {
-  const { loadAll, auth, ...otherConfig } = config;
+  const { loadAll, auth, ...otherConfig } = config || {};
   const { getToken } = fetchezData;
 
   if (auth && !getToken)

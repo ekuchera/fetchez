@@ -29,3 +29,5 @@ function makeConfig(config, getToken) {
 
   return newConfig;
 }
+
+module.exports = makeConfig;

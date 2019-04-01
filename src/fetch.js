@@ -1,5 +1,5 @@
 // Test if res has JSON Content Type header
-function isResJson() {
+function isResJson(res) {
   const ct = res.headers.get("content-type");
   const isJson = ct && ct.includes("application/json");
 
@@ -42,7 +42,7 @@ async function recursiveFetchHelper(url, config, getNext, mergeResults) {
   while (next) {
     let r = await fetchHelper(next, config);
     res.push(r);
-    next = getNext(r);
+    next = getNext(r, res);
   }
 
   return res.reduce(mergeResults, null);

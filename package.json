@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/ekuchera/fetchez#readme",
   "devDependencies": {
-    "mocha": "^6.0.2"
+    "mocha": "^6.0.2",
+    "node-fetch": "^2.3.0"
   }
 }

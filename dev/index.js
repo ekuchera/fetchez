@@ -1,3 +1,1 @@
-const fetchez = require("../index");
-
-console.log("Hello");
+console.log("Dev");
