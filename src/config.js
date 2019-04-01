@@ -11,13 +11,13 @@
 function makeConfig(config, getToken) {
   // Keeping headers defined by the user.
   const headers = { ...config.headers };
-  const { auth, json, body } = config;
+  const { json, body } = config;
 
   // Adding json Content Type header
   if (json !== false) headers["Content-Type"] = "application/json";
 
   // if has auth, adding the authorization header
-  if (auth && getToken) headers.Authorization = getToken();
+  if (getToken) headers.Authorization = getToken();
 
   const newConfig = {
     method: config.method || "GET",

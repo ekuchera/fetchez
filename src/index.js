@@ -1,59 +1,42 @@
-const fetchHelper = require("./fetch");
+const { fetchHelper, recursiveFetchHelper } = require("./fetch");
 const makeConfig = require("./config");
 
-function apiRestLoadAllPagesRec(url, config, prevData, resolve, reject) {
-  fetchHelper(
-    url,
-    config,
-    data => {
-      const values = [...prevData, ...data.results];
-      if (data.next)
-        apiRestLoadAllPagesRec(data.next, config, values, resolve, reject);
-      else resolve(values);
-    },
-    reject
-  );
-}
-
 /**
- * Returns all results from a rest api with multiple pages
- * @param {string} url The Url
- * @param {dict} config The fetch fonfig
- * @param {function} resolve Success callback called with data
- * @param {function} reject Error callback called with error
+ * global definitions
  */
-function apiRestLoadAllPages(url, config, resolve, reject) {
-  fetchHelper(
-    url,
-    config,
-    data => {
-      if (data.next)
-        apiRestLoadAllPagesRec(
-          data.next,
-          config,
-          data.results,
-          resolve,
-          reject
-        );
-      else resolve(data.results);
-    },
-    reject
-  );
-}
+var fetchezData = {
+  getToken: null,
+  getNext: null,
+  mergeResults: null
+};
 
 /**
  * Performs an api request
  * @param {string} url The Url to request
  * @param {dict} config The fetch fonfig (will be processed by the function fetchConfigHelper)
- * @param {function} resolve Success callback called with returned data
- * @param {function} reject Error callback called with error
  */
-function simpleRequest(url, config, resolve, reject, loadAll = false) {
-  const c = fetchConfigHelper(config);
+function fetchez(url, config) {
+  const { loadAll, auth, ...otherConfig } = config;
+  const { getToken } = fetchezData;
 
-  if (loadAll) return apiRestLoadAllPages(url, c, resolve, reject);
+  if (auth && !getToken)
+    throw 'fetchez : If you use "auth", you need to define "getToken"';
 
-  return fetchHelper(url, c, resolve, reject);
+  const formattedConfig = makeConfig(otherConfig, getToken);
+
+  if (loadAll) {
+    if (!getNext || !mergeResults)
+      throw 'fetchez : If you use "loadAll", you need to define "getNext" and "mergeResults"';
+
+    return returnPromiseOrResolve(
+      recursiveFetchHelper,
+      formattedConfig,
+      getNext,
+      mergeResults
+    );
+  }
+
+  return fetchHelper(url, formattedConfig);
 }
 
-export { fetchHelper, fetchConfigHelper, apiRestLoadAllPages, simpleRequest };
+module.exports = fetchez;
