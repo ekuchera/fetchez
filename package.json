@@ -1,0 +1,24 @@
+{
+  "name": "fetchez",
+  "version": "0.1.0",
+  "description": "Simple helper for making api requests",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ./dev/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekuchera/fetchez.git"
+  },
+  "keywords": [
+    "fetch",
+    "request",
+    "simple"
+  ],
+  "author": "Eugène Kuchera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ekuchera/fetchez/issues"
+  },
+  "homepage": "https://github.com/ekuchera/fetchez#readme"
+}
