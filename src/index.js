@@ -39,4 +39,13 @@ function fetchez(url, config) {
   return fetchHelper(url, formattedConfig);
 }
 
+function configure(data) {
+  fetchezData = {
+    ...fetchezData,
+    ...data
+  };
+}
+
+fetchez.configure = configure;
+
 module.exports = fetchez;
