@@ -1,25 +1,4 @@
-import Auth from "./Auth";
-
-/**
- * Simplifies fetch request syntax
- * @param {string} url The Url
- * @param {dict} config Fetch config dictionnary with request method, headers etc...
- * @param {function} resolve Success callback called with json parsed data
- * @param {function} reject Failure callback called with error
- */
-function fetchHelper(url, config, resolve, reject) {
-  fetch(url, config)
-    .then(res => {
-      const ct = res.headers.get("content-type");
-      if (ct && ct.includes("application/json")) {
-        res
-          .json()
-          .then(res.ok ? resolve : reject)
-          .catch(reject);
-      } else reject(res.statusText);
-    })
-    .catch(reject);
-}
+const fetchHelper = require("./fetch");
 
 /**
  * Transforms the given config
