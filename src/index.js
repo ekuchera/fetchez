@@ -17,7 +17,7 @@ var fetchezData = {
  */
 function fetchez(url, config) {
   const { loadAll, auth, ...otherConfig } = config || {};
-  const { getToken } = fetchezData;
+  const { getToken, getNext, mergeResults } = fetchezData;
 
   if (auth && !getToken)
     throw 'fetchez : If you use "auth", you need to define "getToken"';
@@ -28,12 +28,7 @@ function fetchez(url, config) {
     if (!getNext || !mergeResults)
       throw 'fetchez : If you use "loadAll", you need to define "getNext" and "mergeResults"';
 
-    return returnPromiseOrResolve(
-      recursiveFetchHelper,
-      formattedConfig,
-      getNext,
-      mergeResults
-    );
+    return recursiveFetchHelper(url, formattedConfig, getNext, mergeResults);
   }
 
   return fetchHelper(url, formattedConfig);
