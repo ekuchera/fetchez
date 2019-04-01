@@ -4,7 +4,8 @@
   "description": "Simple helper for making api requests",
   "main": "index.js",
   "scripts": {
-    "dev": "node ./dev/index.js"
+    "dev": "node ./dev/index.js",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/ekuchera/fetchez/issues"
   },
-  "homepage": "https://github.com/ekuchera/fetchez#readme"
+  "homepage": "https://github.com/ekuchera/fetchez#readme",
+  "devDependencies": {
+    "mocha": "^6.0.2"
+  }
 }
