@@ -4,7 +4,6 @@
   "description": "Simple helper for making api requests",
   "main": "index.js",
   "scripts": {
-    "dev": "node ./dev/index.js",
     "test": "mocha"
   },
   "repository": {
