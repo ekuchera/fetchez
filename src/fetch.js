@@ -27,3 +27,28 @@ async function fetchHelper(url, config) {
 
   return res;
 }
+
+/**
+ * If the endpoint offers
+ * @param {*} url
+ * @param {*} config
+ * @param {*} getNext
+ * @param {*} mergeResults
+ */
+async function recursiveFetchHelper(url, config, getNext, mergeResults) {
+  const res = [];
+  let next = url;
+
+  while (next) {
+    let r = await fetchHelper(next, config);
+    res.push(r);
+    next = getNext(r);
+  }
+
+  return res.reduce(mergeResults, null);
+}
+
+module.exports = {
+  fetchHelper,
+  recursiveFetchHelper
+};
