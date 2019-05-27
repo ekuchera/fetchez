@@ -49,12 +49,9 @@ describe("Requests", () => {
   });
   describe("Multipage request", () => {
     it("Trying load all withoud initial configuration", done => {
-      try {
-        fetchez(getUrl(), { loadAll: true });
-        done("Function executed without configuration");
-      } catch (e) {
-        done();
-      }
+      fetchez(getUrl(), { loadAll: true })
+        .then(() => done("Function executed without configuration"))
+        .catch(() => done());
     });
     it("Load multipage request", done => {
       fetchez.configure({

@@ -15,7 +15,7 @@ var fetchezData = {
  * @param {string} url The Url to request
  * @param {dict} config The fetch fonfig (will be processed by the function fetchConfigHelper)
  */
-function fetchez(url, config) {
+async function fetchez(url, config) {
   const conf = config || {};
   const otherConfig = {};
   const { loadAll, auth } = conf;
@@ -27,16 +27,21 @@ function fetchez(url, config) {
   if (auth && !getToken)
     throw 'fetchez : If you use "auth", you need to define "getToken"';
 
-  const formattedConfig = makeConfig(otherConfig, getToken);
+  const formattedConfig = await makeConfig(otherConfig, getToken);
 
   if (loadAll) {
     if (!getNext || !mergeResults)
       throw 'fetchez : If you use "loadAll", you need to define "getNext" and "mergeResults"';
 
-    return recursiveFetchHelper(url, formattedConfig, getNext, mergeResults);
+    return await recursiveFetchHelper(
+      url,
+      formattedConfig,
+      getNext,
+      mergeResults
+    );
   }
 
-  return fetchHelper(url, formattedConfig);
+  return await fetchHelper(url, formattedConfig);
 }
 
 function configure(data) {

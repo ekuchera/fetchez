@@ -8,7 +8,7 @@
  * stringified to JSON if json is not set to false
  * @param {dict} config
  */
-function makeConfig(config, getToken) {
+async function makeConfig(config, getToken) {
   // Keeping headers defined by the user.
   const headers = {};
   Object.assign(headers, config.headers);
@@ -18,7 +18,7 @@ function makeConfig(config, getToken) {
   if (json !== false) headers["Content-Type"] = "application/json";
 
   // if has auth, adding the authorization header
-  if (getToken) headers.Authorization = getToken();
+  if (getToken) headers.Authorization = await getToken();
 
   const newConfig = {
     method: config.method || "GET",
