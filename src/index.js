@@ -16,8 +16,13 @@ var fetchezData = {
  * @param {dict} config The fetch fonfig (will be processed by the function fetchConfigHelper)
  */
 function fetchez(url, config) {
-  const { loadAll, auth, ...otherConfig } = config || {};
+  const conf = config || {};
+  const otherConfig = {};
+  const { loadAll, auth } = conf;
   const { getToken, getNext, mergeResults } = fetchezData;
+  Object.keys(conf)
+    .filter(e => e !== "loadAdd" && e !== "auth")
+    .forEach(e => (otherConfig[e] = conf[e]));
 
   if (auth && !getToken)
     throw 'fetchez : If you use "auth", you need to define "getToken"';
@@ -35,10 +40,10 @@ function fetchez(url, config) {
 }
 
 function configure(data) {
-  fetchezData = {
-    ...fetchezData,
-    ...data
-  };
+  const newData = {};
+  Object.assign(newData, fetchezData);
+  Object.assign(newData, data);
+  fetchezData = newData;
 }
 
 fetchez.configure = configure;

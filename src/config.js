@@ -10,7 +10,8 @@
  */
 function makeConfig(config, getToken) {
   // Keeping headers defined by the user.
-  const headers = { ...config.headers };
+  const headers = {};
+  Object.assign(headers, config.headers);
   const { json, body } = config;
 
   // Adding json Content Type header
