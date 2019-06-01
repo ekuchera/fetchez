@@ -27,7 +27,7 @@ async function fetchez(url, config) {
   if (auth && !getToken)
     throw 'fetchez : If you use "auth", you need to define "getToken"';
 
-  const formattedConfig = await makeConfig(otherConfig, getToken);
+  const formattedConfig = await makeConfig(otherConfig, auth && getToken);
 
   if (loadAll) {
     if (!getNext || !mergeResults)
