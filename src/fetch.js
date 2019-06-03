@@ -48,7 +48,4 @@ async function recursiveFetchHelper(url, config, getNext, mergeResults) {
   return res.reduce(mergeResults, null);
 }
 
-module.exports = {
-  fetchHelper,
-  recursiveFetchHelper
-};
+export { fetchHelper, recursiveFetchHelper };

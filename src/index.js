@@ -1,5 +1,6 @@
-const { fetchHelper, recursiveFetchHelper } = require("./fetch");
-const makeConfig = require("./config");
+import "@babel/polyfill";
+import { fetchHelper, recursiveFetchHelper } from "./fetch";
+import makeConfig from "./config";
 
 /**
  * global definitions
@@ -16,13 +17,8 @@ var fetchezData = {
  * @param {dict} config The fetch fonfig (will be processed by the function fetchConfigHelper)
  */
 async function fetchez(url, config) {
-  const conf = config || {};
-  const otherConfig = {};
-  const { loadAll, auth } = conf;
+  const { loadAll, auth, ...otherConfig } = config || {};
   const { getToken, getNext, mergeResults } = fetchezData;
-  Object.keys(conf)
-    .filter(e => e !== "loadAdd" && e !== "auth")
-    .forEach(e => (otherConfig[e] = conf[e]));
 
   if (auth && !getToken)
     throw 'fetchez : If you use "auth", you need to define "getToken"';
@@ -45,12 +41,12 @@ async function fetchez(url, config) {
 }
 
 function configure(data) {
-  const newData = {};
-  Object.assign(newData, fetchezData);
-  Object.assign(newData, data);
-  fetchezData = newData;
+  fetchezData = {
+    ...fetchezData,
+    ...data
+  };
 }
 
 fetchez.configure = configure;
 
-module.exports = fetchez;
+export default fetchez;

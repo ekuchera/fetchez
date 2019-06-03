@@ -1,7 +1,9 @@
 global.fetch = require("node-fetch");
 var assert = require("assert");
 
-const fetchez = require("../index");
+const { default: fetchez } = require("../build/index");
+
+console.log(fetchez);
 
 const getUrl = page => `https://reqres.in/api/users?page=${page || 1}`;
 

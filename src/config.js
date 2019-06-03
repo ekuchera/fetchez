@@ -10,8 +10,7 @@
  */
 async function makeConfig(config, getToken) {
   // Keeping headers defined by the user.
-  const headers = {};
-  Object.assign(headers, config.headers);
+  const headers = { ...config.headers };
   const { json, body } = config;
 
   // Adding json Content Type header
@@ -31,4 +30,4 @@ async function makeConfig(config, getToken) {
   return newConfig;
 }
 
-module.exports = makeConfig;
+export default makeConfig;
