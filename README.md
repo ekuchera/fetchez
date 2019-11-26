@@ -26,7 +26,7 @@ fetchez(...)
 ```
 
 ## With auth
-Fetchez can automatically add the token ao authentify your request.
+Fetchez can automatically add the token authentify your request.
 ### Configuration
 First, you have to provite the function that gets the token :
 ```
@@ -43,4 +43,34 @@ fetchez(url, { auth: true, ... }).then(...)...;
 And fetchez will add the header :
 ```
 Authorization: Bearer ...
+```
+
+## Load multiple pages
+Fetchez can automatically load a paginated api and merge it as one request
+### Configuration
+Assuming that we have an API that returns something like this :
+```
+{
+  "next": "https://...?page=2", // Or null
+  "results": [
+    ...
+  ]
+}
+```
+We have to configure fetchez like this :
+```
+// How to go to next page
+// If the returned value evaluates as "false", it is considered to be the last page
+const getNext = res => res.next;
+// How to merge pages
+// mergedResults : List of all merged elements
+// newElement : Current page to merge
+const mergeResults = (mergedResults, newElement) => [...(mergedResults || []), ...newElement.results];
+
+fetchez.configure({ getNext, mergeResults });
+```
+### Usage
+To use it, you simply need to activate the option :
+```
+fetchez(url, { loadAll: true }).then(mergedResults => console.log(mergedResults));
 ```
