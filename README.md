@@ -1,5 +1,5 @@
 # fetchez
-This is a simple wrapper to simplify the usage of fetch.
+This is a simple wrapper to simplify the usage of fetch for React.
 It helps with a simple management of the auth token and with loading of multiple pages of a REST API.
 
 # Examples
@@ -26,7 +26,7 @@ fetchez(...)
 ```
 
 ## With auth
-Fetchez can automatically add the token authentify your request.
+Fetchez can automatically add the token to authentify your request.
 ### Configuration
 First, you have to provite the function that gets the token :
 ```
